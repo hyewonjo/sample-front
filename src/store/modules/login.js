@@ -34,6 +34,7 @@ const loginStore = {
                     console.log('로그인되었습니다.');
                     commit('setMemberId', memberInfo.id);
                     commit('setAccessToken', res.data.accessToken);
+                    axios.defaults.headers.common['Access-Token'] = res.data.accessToken;
                     result = true;
                 } else {
                     console.log('로그인되지 않았습니다.');
@@ -59,6 +60,7 @@ const loginStore = {
         },
         doLogout({commit}) {
             commit('reset');
+            delete axios.defaults.headers.common['Access-Token'];
         }
     },
 };
