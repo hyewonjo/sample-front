@@ -62,7 +62,6 @@ export default {
 
       try {
         const boardItem = {
-          writer: this.boardItem.writer,
           subject: this.boardItem.subject,
           content: this.boardItem.content,
         };

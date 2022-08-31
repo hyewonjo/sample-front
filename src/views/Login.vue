@@ -11,7 +11,7 @@
         <input type="password" id="memberPasswordInput" class="input_text" ref="memberPasswordInput" v-model.trim="memberPassword" placeholder="패스워드를 입력하세요." />
       </p>
       <p class="buttons">
-        <!-- prevent를 추가하면 form의 input에서 엔터키를 누를때 form이 submit되는것을 방지할수 있다. -->
+        <!-- prevent를 추가하면 form의 input에서 엔터키를 누를때 form이 submit되는것을 방지할수 있다. submit되면 그 이벤트를 캐치해서 중간 밸리데이션같은거 해줘야되니까. submit 막고 선언한 method 실행하는게 나음-->
         <button v-on:click.prevent="doLogin" class="button blue">로그인</button>
         <button v-on:click.prevent="doCancel" class="button">취소</button>
       </p>
