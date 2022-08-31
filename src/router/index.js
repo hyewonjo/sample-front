@@ -20,14 +20,6 @@ const routes = [
     path: '/board',
     name: 'BoardList',
     component: () => import('../views/BoardList'),
-    // beforeEnter: (to, from, next) => {
-    //   const isLogin = store.getters['loginStore/isLogin'];
-    //   if (!isLogin) {
-    //     next({name: 'LoginView', query: {returnUrl: to.fullPath}});
-    //   } else {
-    //     next();
-    //   }
-    // }
   },
   {
     path: '/boardView',
@@ -37,12 +29,22 @@ const routes = [
   {
     path: '/boardWrite',
     name: 'BoardWrite',
-    component: () => import('../views/BoardWrite')
+    component: () => import('../views/BoardWrite'),
+    // beforeEnter: (to, from, next) => {
+    //   const isLogin = store.getters['loginStore/isLogin'];
+    //   if (!isLogin) {
+    //     next({name: 'LoginView', query: {returnUrl: to.fullPath}});
+    //   } else {
+    //     next();
+    //   }
+    // }
+    meta: { requireLogin: true }
   },
   {
     path: '/boardEdit',
     name: 'BoardEdit',
-    component: () => import('../views/BoardEdit')
+    component: () => import('../views/BoardEdit'),
+    meta: { requireLogin: true }
   },
   {
     path: '/login',
@@ -57,7 +59,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/board') {
+  if (to.meta.requireLogin) {
     const isLogin = store.getters['loginStore/isLogin'];
     if (!isLogin) {
       next({name: 'LoginView', query: {returnUrl: to.fullPath}});
