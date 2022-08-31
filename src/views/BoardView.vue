@@ -26,11 +26,11 @@
 
     <div class="buttons">
       <div class="left">
-        <button class="button" v-on:click="boardEditClick()">수정</button>
-        <button class="button" v-on:click="boardDeleteClick()">삭제</button>
+        <button class="button" v-if="isEditable" v-on:click="boardEditClick">수정</button>
+        <button class="button" v-if="isEditable" v-on:click="boardDeleteClick">삭제</button>
       </div>
       <div class="right">
-        <button type="button" class="button" v-on:click="boardListClick()">목록</button>
+        <button type="button" class="button" v-on:click="boardListClick">목록</button>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@ export default {
       boardItem: {}
     };
   },
-  methods: {
+  methods: { // 랜더링이 일어날때마다 항상 함수를 실행한다.
     getBoardRead() {
       this.axios.get('http://localhost:9000/boards/' + this.$route.query.boardNo)
           .then(res => {
@@ -74,7 +74,13 @@ export default {
         console.error(err);
         alert('삭제되지 않았습니다.');
       }
-
+    }
+  },
+  computed: { // 저장된 결과(캐싱)를 반환하므로 종속 대상의 변경이 일어나기 전까지 호출되지 않는다.
+    isEditable() {
+      // 현재 유저가 이 글의 작성자와 동일한 유저인지 체크
+      // 초기값 설정해놨기때문에 로그인안한 유저도 memberId는 ''으로 값을 가지고있다. (에러 발생X)
+      return this.$store.state.loginStore.memberId === this.boardItem.writer;
     }
   },
   mounted() {
