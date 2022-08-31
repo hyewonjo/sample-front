@@ -8,7 +8,7 @@
       </colgroup>
       <tr>
         <th scope="row">작성자</th>
-        <td><input type="text" placeholder="아이디를 입력하세요." ref="writerInput" v-model.trim="writer"></td>
+        <td>{{ writer }}</td>
       </tr>
       <tr>
         <th scope="row">제목</th>
@@ -33,18 +33,14 @@ export default {
   name: 'BoardWrite',
   data: function() {
     return {
-      writer: '',
+      writer: this.$store.state.loginStore.memberId,
       subject: '',
       content: '',
     };
   },
   methods: {
     async boardSaveClick() {
-      if (this.writer === '') {
-        alert('작성자를 입력하세요');
-        this.$refs.writerInput.focus();
-        return;
-      } else if (this.subject === '') {
+      if (this.subject === '') {
         alert('제목을 입력하세요');
         this.$refs.subjectInput.focus();
         return;
@@ -57,7 +53,6 @@ export default {
       if (!confirm('등록하시겠습니까?')) return;
 
       let boardItem = {
-        writer: this.writer,
         subject: this.subject,
         content: this.content,
       };
@@ -80,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.writerInput.focus();
+    this.$refs.subjectInput.focus();
   }
 };
 </script>

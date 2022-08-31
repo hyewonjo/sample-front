@@ -66,11 +66,10 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requireLogin) {
     const isLogin = store.getters['loginStore/isLogin'];
     if (!isLogin) {
-      alert("로그인되어야 사용 가능합니다.");
       // 1.
       // next({name: 'LoginView', query: {returnUrl: to.fullPath}});
       // 2.
-      // if (confirm('로그인 되어야 사용가능합니다. 로그인하시겠습니까?\n')) next({name: 'LoginView', query: {returnUrl: to.fullPath}});
+      if (confirm('로그인 되어야 사용가능합니다. 로그인하시겠습니까?\n')) next({name: 'LoginView', query: {returnUrl: to.fullPath}});
     } else {
       next();
     }
