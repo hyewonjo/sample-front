@@ -40,6 +40,7 @@ const loginStore = {
             state.memberId = '';
             state.accessToken = '';
             state.refreshToken = '';
+            localStorage.removeItem("testvue.login");
         },
         saveStateToStorage(state) {
             localStorage.setItem('testvue.login.memberId', state.memberId);
