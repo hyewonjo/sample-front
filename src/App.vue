@@ -33,6 +33,9 @@ export default {
     isLogin() {
       return this.$store.getters['loginStore/isLogin'];
     }
+  },
+  mounted() {
+    this.$store.dispatch('loginStore/doReadStateFromStorage');
   }
 };
 </script>
