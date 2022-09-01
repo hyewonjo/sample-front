@@ -43,9 +43,7 @@ const loginStore = {
             localStorage.removeItem("testvue.login");
         },
         saveStateToStorage(state) {
-            localStorage.setItem('testvue.login.memberId', state.memberId);
-            localStorage.setItem('testvue.login.accessToken', state.accessToken);
-            localStorage.setItem('testvue.login.refreshToken', state.refreshToken);
+            localStorage.setItem('testvue.login', JSON.stringify(state));
         },
         readStateFromStorage(state) {
             if (localStorage.getItem('testvue.login.memberId') != null) {
@@ -56,6 +54,20 @@ const loginStore = {
             }
             if (localStorage.getItem('testvue.login.refreshToken') != null) {
                 state.refreshToken = localStorage.getItem('testvue.login.refreshToken');
+            }
+
+            if (localStorage.getItem('testvue.login') != null) {
+                const storage = JSON.parse(localStorage.getItem('testvue.login'));
+
+                if (storage.memberId != null) {
+                    state.memberId = storage.memberId;
+                }
+                if (storage.accessToken != null) {
+                    state.accessToken = storage.accessToken;
+                }
+                if (storage.refreshToken != null) {
+                    state.refreshToken = storage.refreshToken;
+                }
             }
         }
     },
