@@ -52,6 +52,16 @@ export default {
 
       if (!confirm('등록하시겠습니까?')) return;
 
+      // 토큰 체크
+      if (this.$store.getters['loginStore/isAccessTokenExpired']) {
+        try {
+          await this.$store.dispatch('loginStore/doRefreshToken');
+        } catch(err) {
+          alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
+          return;
+        }
+      }
+
       let boardItem = {
         subject: this.subject,
         content: this.content,
