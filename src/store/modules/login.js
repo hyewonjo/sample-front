@@ -85,7 +85,9 @@ const loginStore = {
         async doRefreshToken({commit, state}) {
             // state에있는 refreshToken으로 refresh 호출하면 되잖슴. commit은 가지고오긴 해야겠네
             try {
-                const res = await axios.post('http://localhost:9000/members/refresh', {
+                // 이 axios 그대로 사용하게되면, 인터셉터가 또 실행될거라 무한루프가 발생한다. 새로 axios instance를 생성해줘야한다.
+                const axiosRefresh = axios.create();
+                const res = await axiosRefresh.post('http://localhost:9000/members/refresh', {
                     id: state.memberId,
                     accessToken: state.accessToken,
                     refreshToken: state.refreshToken,
